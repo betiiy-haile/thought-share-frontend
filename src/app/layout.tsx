@@ -1,8 +1,9 @@
+
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
-
+import ReduxProvider from "@/lib/Provider";
 
 export const metadata: Metadata = {
   title: "Thought Share | share your thoughts with the world",
@@ -17,9 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='bg-[#0F172A] '>
-        <Navbar />
-        {children}
-        <Footer />
+        <ReduxProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );
