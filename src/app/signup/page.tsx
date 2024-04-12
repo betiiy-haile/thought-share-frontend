@@ -34,7 +34,7 @@ const SignUpPage = () => {
 
 
   return (
-    <div className=" px-5 lg:px-16 xl:px-28  flex flex-row gap-12 items-center justify-center">
+    <div className=" px-5 lg:px-16 xl:px-40  flex flex-row gap-12 items-center justify-center">
       <div className="hidden lg:flex">
         <Image src="/sign-up.png" alt="sign up image" width={750} height={600} className="w-[450px] xl:w-[600px]" />
       </div>

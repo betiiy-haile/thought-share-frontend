@@ -1,6 +1,13 @@
 
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { BaseQueryFn, FetchArgs, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+export interface CustomError {
+   data: {
+    error: string,
+    status: number
+   },
+   status: number
+} 
 
 export const baseApi = createApi({
     reducerPath: "baseApi",
@@ -13,7 +20,7 @@ export const baseApi = createApi({
         //     }
         //     return headers
         // } 
-    }), 
+    }) as BaseQueryFn<string | FetchArgs, unknown, CustomError, {}>,
     endpoints: builder => ({})
 })
 
