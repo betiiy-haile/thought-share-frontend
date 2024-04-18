@@ -8,7 +8,7 @@ import 'react-quill/dist/quill.bubble.css'
 
 const WritePage = () => {
 
-    const [file, setFile] = useState<File | null>(null);
+    const [image, setImage] = useState<File | null>(null);
     const [media, setMedia] = useState("");
     const [value, setValue] = useState("");
     const [title, setTitle] = useState("");
@@ -30,10 +30,12 @@ const WritePage = () => {
             method: "POST",
             body: JSON.stringify({
                 title,
-                desc: value,
-                img: media,
+                content: value,
+                image: media,
                 slug: slugify(title),
-                catSlug: catSlug || "style",
+                category: catSlug || "style",
+                comments: [],
+                
             })
         })
         console.log(res)
@@ -41,7 +43,7 @@ const WritePage = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            setFile(e.target.files[0])
+            setImage(e.target.files[0])
         }
     }
 
@@ -62,7 +64,7 @@ const WritePage = () => {
                         </label>
                     </button>
                 </div>
-                {/* <ReactQuill className="w-full text-3xl text-slate-300 " theme="bubble" value={value} onChange={setValue} placeholder="Tell Your story..." /> */}
+                <ReactQuill className="w-full text-3xl text-slate-300 placeholder:text-slate-300  " theme="bubble" value={value} onChange={setValue} placeholder="Tell Your story..." />
             </div>
             <button className='bg-blue-600 text-white font-medium mt-8 px-6 lg:px-10 py-4 rounded lg:rounded-lg cursor-pointer hover:opacity-70' onClick={handleSubmit} >publish</button>
         </div>

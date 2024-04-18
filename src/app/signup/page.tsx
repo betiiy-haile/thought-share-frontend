@@ -4,19 +4,26 @@ import Image from "next/image"
 import Link from "next/link"; 
 import { FaEye } from "react-icons/fa";
 import { AiFillEyeInvisible } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { SignUpSchema } from "@/utils/schema";
+import { useSignupMutation } from "@/lib/features/userApi";
+import { CustomError } from "@/lib/services/baseApi";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUpPage = () => {
 
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const router = useRouter()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [signup, {data, isSuccess, isError, isLoading, error}] = useSignupMutation()
 
   const {values, errors, touched, handleSubmit, handleChange } = useFormik({
     initialValues: {
@@ -26,11 +33,27 @@ const SignUpPage = () => {
       confirmPassword: '',
     },
     validationSchema: SignUpSchema,
-    onSubmit: (values) => {
-      
+    onSubmit: async (values) => {      
       console.log(values)
+      const res = await signup({name: values.name, email: values.email, password: values.password})
+      console.log(res)
     }
   })
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("User registered successfully. please Login to continue");
+      setTimeout(() => {
+        router.push("/login");
+      }, 4000);
+    }
+
+    if (isError && error) {
+      const err = error as CustomError
+      console.log(err.data.error);
+      toast.error(err.data.error);
+    }
+  }, [isSuccess, isError, error, router]);
 
 
   return (
@@ -81,10 +104,13 @@ const SignUpPage = () => {
             </div>
           </div>
 
-          <button type="submit" className="button-gradient px-6 lg:px-10 py-2 lg:py-3  rounded lg:rounded-lg cursor-pointer hover:opacity-70">Sign Up</button>
+          <button type="submit" className="button-gradient px-6 lg:px-10 py-2 lg:py-3  rounded lg:rounded-lg cursor-pointer hover:opacity-70">
+            {isLoading ? "Loading..." : "Sign Up"}
+          </button>
           <div className="text-slate-300 text-center -mt-2 lg:-mt-6 font-light text-sm ">Already have an account? <Link href={"/login"} className="text-blue-600 hover:underline cursor-pointer">Login</Link></div>
           </form>
       </div>
+      <ToastContainer />
     </div>
   )
 }
