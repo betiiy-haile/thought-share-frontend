@@ -1,7 +1,7 @@
 'use client'
 import { categories } from "../../../data"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.bubble.css'
@@ -14,6 +14,11 @@ const WritePage = () => {
     const [title, setTitle] = useState("");
     const [catSlug, setCatSlug] = useState("");
 
+    useEffect(() => {
+        if (typeof document !== 'undefined') {
+            document.title = 'Write New Blog';
+        }
+    }, []);
 
     // transform Beti Haile => beti-haile
     const slugify = (str: string) =>
