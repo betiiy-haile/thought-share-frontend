@@ -14,11 +14,14 @@ const WritePage = () => {
     const [title, setTitle] = useState("");
     const [catSlug, setCatSlug] = useState("");
 
+    {/**
     useEffect(() => {
-        if (typeof document !== 'undefined') {
-            document.title = 'Write New Blog';
-        }
-    }, []);
+            if (typeof document !== 'undefined') {
+                document.title = 'Write New Blog';
+            }
+        }, []);
+*/}
+    
 
     // transform Beti Haile => beti-haile
     const slugify = (str: string) =>
@@ -69,7 +72,10 @@ const WritePage = () => {
                         </label>
                     </button>
                 </div>
+                {/**
                 <ReactQuill className="w-full text-3xl text-slate-300 placeholder:text-slate-300  " theme="bubble" value={value} onChange={setValue} placeholder="Tell Your story..." />
+                  
+                 */}
             </div>
             <button className='bg-blue-600 text-white font-medium mt-8 px-6 lg:px-10 py-4 rounded lg:rounded-lg cursor-pointer hover:opacity-70' onClick={handleSubmit} >publish</button>
         </div>
