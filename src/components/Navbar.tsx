@@ -14,6 +14,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [isSettingOpen, setIsSettingOpen] = useState(false)
     const menuRef = useRef<HTMLDivElement>(null);
+    const mobileRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
     function isUserLoggedIn() {
@@ -35,12 +36,16 @@ const Navbar = () => {
             if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
                 setIsSettingOpen(false);
             }
+
+            if (mobileRef.current && !mobileRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
         }
         document.addEventListener('click', handleClickOutside)
         return () => {
             document.removeEventListener('click', handleClickOutside)
         }
-    }, [isSettingOpen])
+    }, [isSettingOpen, isOpen])
 
     if (isUserLoggedIn()) {
         const userData = JSON.parse(Cookies.get('user') || '{}');
@@ -54,8 +59,12 @@ const Navbar = () => {
         router.push('/login');
     };
 
-    const content = <div className='lg:hidden absolute top-20 w-full left-0 right-0 bg-[#0F172A] flex flex-col item-center justify-center'>
-        <ul className='text-center text-xl text-white flex flex-col py-4 px-32'>
+
+    const mobileNav = <div ref={mobileRef} className={`absolute lg:hidden top-0 ${isOpen ? "left-0" : "left-[-100%]"} w-2/3 md:w-1/2 h-screen bg-[#3C465E] py-20 bg-opacity-60 backdrop-blur-lg`}>
+        <div className='flex flex-col justify-center items-center'>
+            <Image src="/logo.svg" alt="Share it Logo" width={100} height={100} />
+        </div>
+        <ul className='text-center text-xl text-white flex flex-col py-4 '>
             <Link href="/" onClick={() => setIsOpen(false)} >
                 <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "home" ? "text-blue-500" : ""}`} onClick={() => setIsActive("home")}>Home</li>
             </Link>
@@ -131,7 +140,7 @@ const Navbar = () => {
                 </div>
 
                 <div>
-                    {isOpen && content}
+                    {isOpen && mobileNav}
                 </div>
 
                 <button className='flex flex-row gap-4 lg:hidden transition '>

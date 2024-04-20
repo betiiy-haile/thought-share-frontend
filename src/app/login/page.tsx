@@ -105,8 +105,8 @@ const LoginPage = () => {
           <div className="text-slate-300 text-center -mt-2 lg:-mt-6 font-light text-sm ">Dont you have an account? <Link href={"/signup"} className="text-blue-600 hover:underline cursor-pointer">Sign Up</Link></div>
         </form>
       </div>
-      <div className="hidden lg:flex">
-        <Image src="/sign-in.png" alt="sign in image" width={750} height={600} className="w-[450px] xl:w-[600px] "/>
+      <div className="hidden flex-1 lg:flex items-center justify-center">
+        <Image src="/sign-in.png" alt="sign in image" width={500} height={550} />
       </div>
       <ToastContainer />
     </div>

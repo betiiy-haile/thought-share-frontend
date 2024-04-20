@@ -57,7 +57,7 @@ const WritePage = () => {
 
     return (
         <div className="px-5 lg:px-16 xl:px-20 2xl:px-28 flex items-start flex-col">
-            <input type="text" placeholder="Title" className=" py-4 text-slate-300 bg-transparent text-5xl border-none outline-none" onChange={e => setTitle(e.target.value)} />
+            <input type="text" placeholder="Title" className=" py-4 text-slate-300 bg-transparent text-xl xl:text-5xl border-none outline-none" onChange={e => setTitle(e.target.value)} />
             <select className='mb-10 text-slate-300 rounded-lg px-4 py-4 w-full lg:w-[450px] bg-[#3C465E] outline-none' >
                           <option value="">Choose a category</option>
                        {categories.map((category, index) => <option key={index} value={category.name}>{category.name}</option>)}

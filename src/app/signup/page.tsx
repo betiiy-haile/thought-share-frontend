@@ -57,11 +57,11 @@ const SignUpPage = () => {
 
 
   return (
-    <div className=" px-5 lg:px-16 xl:px-40  flex flex-row gap-12 items-center justify-center">
-      <div className="hidden lg:flex">
-        <Image src="/sign-up.png" alt="sign up image" width={750} height={600} className="w-[450px] xl:w-[600px]" />
+    <div className=" px-5 lg:px-16 xl:px-40  flex flex-row  items-center justify-center">
+      <div className="hidden flex-1 lg:flex items-center justify-center">
+        <Image src="/sign-up.png" alt="sign up image" width={500} height={550}  />
       </div>
-      <div className="flex-1">
+      <div className="w-full  lg:flex-1">
         <h2 className="text-3xl font-bold text-slate-300 w-[80%] mx-auto mb-4">Sign Up</h2>
         <form className="flex flex-col  gap-4 lg:gap-8 w-[80%] mx-auto" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">

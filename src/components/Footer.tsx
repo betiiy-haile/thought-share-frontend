@@ -4,13 +4,13 @@ import { FaRegCopyright } from "react-icons/fa"
 
 const Footer = () => {
 
-    const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
 
   return (
       <footer className='bg-[#3C465E] bg-opacity-30 py-20 mt-20 text-white'>
-          <div className="flex flex-col lg:flex-row gap-y-16 items-center justify-evenly">
+          <div className="flex flex-col  lg:flex-row gap-y-16 items-center justify-evenly">
 
-              <div>
+              <div >
                   <Image src="/logo.svg" alt="Share it Logo" width={200} height={200} />
               </div>
 

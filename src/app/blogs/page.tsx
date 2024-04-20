@@ -25,7 +25,7 @@ const BlogsPage = () => {
       {/* card lists */}
 
       <section className='flex flex-col items-center gap-10'>
-        <div className='px-4 w-full flex flex-wrap gap-4 lg:gap-12 justify-center'>
+        <div className='w-full  grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 lg:gap-12 mx-auto'>
           {posts
             .filter((post) => post.title.toLowerCase().includes(value.toLowerCase()))
             .map((post, index) => <PostCard key={index} {...post} />)}
