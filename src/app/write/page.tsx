@@ -1,26 +1,25 @@
 'use client'
 import { categories } from "../../../data"
 
-import { useState, useEffect } from "react"
+import React,  { useState, useEffect } from "react"
 import Image from "next/image"
-import ReactQuill from "react-quill"
+import dynamic from "next/dynamic"
 import 'react-quill/dist/quill.bubble.css'
 
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const WritePage = () => {
 
     const [image, setImage] = useState<File | null>(null);
-    const [media, setMedia] = useState("");
-    const [value, setValue] = useState("");
+    const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
-    const [catSlug, setCatSlug] = useState("");
+    const [category, setCategory] = useState("");
 
-    {/**
     useEffect(() => {
             if (typeof document !== 'undefined') {
-                document.title = 'Write New Blog';
+                document.title = 'Write New Post';
             }
         }, []);
-*/}
+
     
 
     // transform Beti Haile => beti-haile
@@ -38,10 +37,10 @@ const WritePage = () => {
             method: "POST",
             body: JSON.stringify({
                 title,
-                content: value,
-                image: media,
+                content,
+                image,
                 slug: slugify(title),
-                category: catSlug || "style",
+                category,
                 comments: [],
                 
             })
@@ -66,16 +65,17 @@ const WritePage = () => {
 
                 <div className="w-12 h-12 rounded-full bg-transparent border border-slate-300 flex items-center justify-center cursor-pointer">
                     <input type="file" id="image" onChange={handleChange} style={{ display: 'none' }} />
-                    <button className='w-12 h-12 rounded-full bg-transparent border flex items-center justify-center cursor-pointer'>
+                    <button className='w-12 h-12 rounded-full bg-transparent border flex items-center justify-center cursor-pointer' disabled={!image}>
                         <label htmlFor="image">
                             <Image src="/image.png" alt="" width={16} height={16} />
                         </label>
                     </button>
+                    
                 </div>
-                {/**
-                <ReactQuill className="w-full text-3xl text-slate-300 placeholder:text-slate-300  " theme="bubble" value={value} onChange={setValue} placeholder="Tell Your story..." />
-                  
-                 */}
+                {image && (
+                    <Image src={URL.createObjectURL(image)} alt="" width={300} height={300} className="w-[300px] h-[200px] md:h-[300px] md:w-[450px]  object-cover" />
+                )}            
+                <ReactQuill className="w-full text-3xl text-slate-300 placeholder:text-slate-300  " theme="bubble" value={content} onChange={setContent} placeholder="Tell Your story..." />
             </div>
             <button className='bg-blue-600 text-white font-medium mt-8 px-6 lg:px-10 py-4 rounded lg:rounded-lg cursor-pointer hover:opacity-70' onClick={handleSubmit} >publish</button>
         </div>
@@ -84,5 +84,3 @@ const WritePage = () => {
 
 export default WritePage
 
-
-// 

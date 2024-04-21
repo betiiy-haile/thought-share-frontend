@@ -41,3 +41,7 @@
 .travel {
   @apply bg-gray-500 bg-opacity-50
 }
+
+.ql-editor.ql-blank::before {
+  @apply text-slate-300 !important;
+}
