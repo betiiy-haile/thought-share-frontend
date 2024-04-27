@@ -35,7 +35,7 @@ const SignUpPage = () => {
     validationSchema: SignUpSchema,
     onSubmit: async (values) => {      
       console.log(values)
-      const res = await signup({name: values.name, email: values.email, password: values.password})
+      const res = await signup({name: values.name, email: values.email, password: values.password, image: null})
       console.log(res)
     }
   })

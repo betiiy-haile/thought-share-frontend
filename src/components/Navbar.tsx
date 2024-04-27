@@ -6,6 +6,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '@/lib/slices/authSlice';
 
 
 const Navbar = () => {
@@ -16,19 +18,11 @@ const Navbar = () => {
     const menuRef = useRef<HTMLDivElement>(null);
     const mobileRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+    const dispatch = useDispatch();
 
-    function isUserLoggedIn() {
-        const userCookie = Cookies.get('user');
 
-        if (userCookie) {
-            const { name, token } = JSON.parse(userCookie);
-            // setIsLogin(true);
-            return name && token;
-        }
-
-        // setIsLogin(false);
-        return false;
-    }
+    const authState = useSelector((state: any) => state.auth)
+    console.log("authState token", authState.token)
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -47,15 +41,10 @@ const Navbar = () => {
         }
     }, [isSettingOpen, isOpen])
 
-    if (isUserLoggedIn()) {
-        const userData = JSON.parse(Cookies.get('user') || '{}');
-        console.log( userData.name +' logged in')
-    } else {
-        console.log('User is not logged in');
-    }
+    
 
     const handleLogout = () => {
-        Cookies.remove('user');
+        dispatch(logoutUser())
         router.push('/login');
     };
 
@@ -75,7 +64,7 @@ const Navbar = () => {
                 <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "write" ? "text-blue-500" : ""}`} onClick={() => setIsActive("write")}>Write</li>
             </Link>
             {
-                isUserLoggedIn() ? (
+                authState.token ? (
                     null
                 ) : (
                     <>
@@ -92,7 +81,7 @@ const Navbar = () => {
         </ul>
     </div>
     return (
-        <nav className='mb-8 sticky top-0 bg-[#0F172A] z-20 lg:mb-12'>
+        <nav className='mb-8 sticky top-0 bg-[#0F172A] z-20 lg:mb-8'>
             <div className='h-24 flex justify-between  text-gray-200 lg:py-5 px-5 lg:px-16 xl:px-28 py-4'>
 
                 <div className='flex items-center flex-1'>
@@ -112,10 +101,10 @@ const Navbar = () => {
                         <Link href="/write">
                             <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "write" ? "text-blue-500" : ""}`} onClick={() => setIsActive("write")}>Write</li>
                         </Link>
-                        {isUserLoggedIn() ? (<>
+                        {authState.token ? (<>
                             <div className='flex gap-4 items-center cursor-pointer' onClick={() => setIsSettingOpen(!isSettingOpen)}>
                                 <Image src="/avator.jpg" alt="avator image" className="w-10  h-10 rounded-full" width={60} height={60} />
-                                <span className='text-white font-medium'>{JSON.parse(Cookies.get('user') || '{}').name}</span>
+                                <span className='text-white font-medium'>{authState.name}</span>
 
                             </div>
                             {isSettingOpen && <div ref={menuRef} className='absolute rounded-lg z-20 backdrop-blur-md px-4 w-40 top-20 lg:right-20 xl:right-32 bg-[#3C465E] bg-opacity-30 flex flex-col item-center justify-center'>
@@ -144,7 +133,7 @@ const Navbar = () => {
                 </div>
 
                 <button className='flex flex-row gap-4 lg:hidden transition '>
-                    <Image src="/avator.jpg" alt="avator image" className="w-10  h-10 rounded-full" width={60} height={60} onClick={() => setIsSettingOpen(!isSettingOpen)} />
+                   {authState.token && <Image src="/avator.jpg" alt="avator image" className="w-10  h-10 rounded-full" width={60} height={60} onClick={() => setIsSettingOpen(!isSettingOpen)} />}
                     {isSettingOpen && <div ref={menuRef} className='absolute rounded-lg z-20 backdrop-blur-md px-6 w-40 top-16 right-10 bg-[#3C465E] bg-opacity-30 flex flex-col item-center justify-center'>
                         <Link href="/profile"><li className=' list-none pt-4 text-left hover:text-blue-500 transition cursor-pointer'>Profile</li></Link>
                         <button onClick={handleLogout} ><li className='list-none py-4 text-left hover:text-blue-500 transition cursor-pointer'>Logout</li></button>

@@ -11,9 +11,10 @@ import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLoginMutation } from "../../lib/features/userApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/lib/slices/authSlice";
 import { CustomError } from "@/lib/services/baseApi";
+import { RootState } from "@/lib/store";
 
 const LoginPage = () => {
   
@@ -46,8 +47,7 @@ const LoginPage = () => {
         router.push("/");
       }, 4000);
 
-      console.log("data", data);
-      dispatch(setUser({ name: data?.name as string, token: data?.token as string }));
+      dispatch(setUser(data as any));      
     }
     if(isError && error) {
       const err = error as CustomError
@@ -55,9 +55,12 @@ const LoginPage = () => {
       toast.error(err.data.error)
     } 
   }, [isSuccess, data, isError, error, dispatch, router]);
-
+  // const userData = useSelector((state: RootState) => state.auth);
+  // console.log("userData from redux", userData);
 
   const [showPassword, setShowPassword] = useState(false)
+
+  
 
   return (
     <div className=" px-5 lg:px-16 xl:px-40  flex flex-row gap-y-12 items-center justify-center">     

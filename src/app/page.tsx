@@ -12,7 +12,7 @@ const HomePage = () => {
       <section className=' flex items-center justify-between'>
         <div className='flex-1 flex flex-col items-start gap-4'>
           <h1 className='text-[32px] md:text-[36px] lg:text-[52px] 2xl:text-[72px] w-full  text-gradient font-bold' >Share Your Amazing Thoughts with the World</h1>
-          <p className=' text-slate-300 text-sm xl:text-md leading-6 md:leading-10 xl:w-[555px] '>Connect with Others and Share Your Incredible Ideas to Inspire, Empower, and Leave a Lasting Impact on the World.</p>
+          <p className=' text-slate-300 text-sm xl:text-lg leading-6 md:leading-10 xl:w-[580px] '>Connect with Others and Share Your Incredible Ideas to Inspire, Empower, and Leave a Lasting Impact on the World.</p>
           <button className='button-gradient mt-8 px-6 lg:px-8 py-3 lg:py-5 rounded lg:rounded-lg cursor-pointer hover:opacity-70'>Get Started</button>
         </div>
         <div className='hidden flex-1 lg:flex items-center justify-center'>
@@ -35,9 +35,9 @@ const HomePage = () => {
       <section className='flex flex-col items-center'>
         <h2 className='text-[28px] text-gradient font-bold mb-10 w-full'>Recent Posts</h2>
         <div className='w-full grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 lg:gap-12 mx-auto'>
-          {
+          {/* {
             posts.map((post, index) => <PostCard key={index} {...post} />)
-          }
+          } */}
         </div>
       </section>
 

@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className='bg-[#0F172A] '>
+      <body className='bg-[#0F172A] min-h-screen'>
         <ReduxProvider>
           <Navbar />
           {children}
