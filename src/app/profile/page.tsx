@@ -62,8 +62,8 @@ const profilePage = () => {
             <div className='md:border-l border-purple-500  flex-1 px-8'>
                 <h2 className="text-3xl font-medium p-2 mb-4 text-slate-300">My Posts</h2>
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-                    {posts.map((post) => (
-                        <div className="w-full group flex flex-col gap-4 p-3 rounded bg-[#3C465E] bg-opacity-50 backdrop-blur ">
+                    {posts.map((post, index) => (
+                        <div key={index} className="w-full group flex flex-col gap-4 p-3 rounded bg-[#3C465E] bg-opacity-50 backdrop-blur ">
                             <div className='w-full h-[210px] flex items-center justify-center overflow-hidden'>
                                 <Image src={post.image} alt="design" className="group-hover:scale-110 transition-all duration-500" width={430} height={200} />
                             </div>
