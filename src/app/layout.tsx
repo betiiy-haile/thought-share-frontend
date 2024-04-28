@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className='bg-[#0F172A] min-h-screen'>
         <ReduxProvider>
-          {/* <Navbar /> */}
+          <Navbar />
           {children}
           <Footer />
         </ReduxProvider>
