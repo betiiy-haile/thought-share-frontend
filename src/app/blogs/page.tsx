@@ -41,8 +41,7 @@ const BlogsPage = () => {
         <p className='text-slate-300 font-light text-lg  xl:text-[24px] text-center'>The latest industry news, interviews, technologies, and resources.</p>
         <input type="text" placeholder='Search' value={value} onChange={(e) => setValue(e.target.value)} className='bg-[#3C465E]  px-4 py-3 lg:py-4 w-full rounded-lg outline-none focus:border-2 text-slate-300 border border-slate-300' />
       </section>
-
-      {/* card lists */}
+      
       <section className='flex flex-col items-center gap-10'>
         <div className='w-[90%]  grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 lg:gap-12 mx-auto'>
           {posts

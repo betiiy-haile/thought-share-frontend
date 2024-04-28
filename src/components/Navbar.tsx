@@ -4,7 +4,6 @@ import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
 import Link from 'next/link';
 import Image from 'next/image';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '@/lib/slices/authSlice';
