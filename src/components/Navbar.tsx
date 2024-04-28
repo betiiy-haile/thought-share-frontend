@@ -59,12 +59,12 @@ const Navbar = () => {
             <Link href="/blogs" onClick={() => setIsOpen(false)} >
                 <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "blogs" ? "text-blue-500" : ""}`} onClick={() => setIsActive("blogs")}>Blogs</li>
             </Link>
-            <Link href="/write" onClick={() => setIsOpen(false)} >
-                <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "write" ? "text-blue-500" : ""}`} onClick={() => setIsActive("write")}>Write</li>
-            </Link>
+            
             {
                 authState.token ? (
-                    null
+                    <Link href="/write" onClick={() => setIsOpen(false)} >
+                        <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "write" ? "text-blue-500" : ""}`} onClick={() => setIsActive("write")}>Write</li>
+                    </Link>
                 ) : (
                     <>
                         <Link href="/login" onClick={() => setIsOpen(false)} >
@@ -97,10 +97,11 @@ const Navbar = () => {
                         <Link href="/blogs">
                             <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "blogs" ? "text-blue-500" : ""}`} onClick={() => setIsActive("blogs")}>Blogs</li>
                         </Link>
-                        <Link href="/write">
-                            <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "write" ? "text-blue-500" : ""}`} onClick={() => setIsActive("write")}>Write</li>
-                        </Link>
+                        
                         {authState.token ? (<>
+                            <Link href="/write">
+                                <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "write" ? "text-blue-500" : ""}`} onClick={() => setIsActive("write")}>Write</li>
+                            </Link>
                             <div className='flex gap-4 items-center cursor-pointer' onClick={() => setIsSettingOpen(!isSettingOpen)}>
                                 <Image src="/avator.jpg" alt="avator image" className="w-10  h-10 rounded-full" width={60} height={60} />
                                 <span className='text-white font-medium'>{authState.name}</span>

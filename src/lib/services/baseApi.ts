@@ -12,7 +12,7 @@ export interface CustomError {
 export const baseApi = createApi({
     reducerPath: "baseApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:8000/api",
+        baseUrl: "https://thought-share-api-1.onrender.com/api",
         // prepareHeaders: (headers, { getState }) => {
         //     const token = (getState() as any).auth.token
         //     if (token) {
