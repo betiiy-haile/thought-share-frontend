@@ -52,7 +52,7 @@ const LoginPage = () => {
       const err = error as CustomError
       console.log(err)
       // console.log(err.data.error)
-      toast.error(err.status)
+      toast.error(err.data.error)
     } 
   }, [isSuccess, data, isError, error, dispatch, router]);
   const [showPassword, setShowPassword] = useState(false)

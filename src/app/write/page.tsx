@@ -115,7 +115,7 @@ const WritePage = () => {
                           <option value="">Choose a category</option>
                        {categories.map((category, index) => <option key={index} value={category.name}>{category.name}</option>)}
                    </select>
-            <div className="flex gap-4 lg:gap-8 h-[500px] w-full relative">
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 h-[500px] w-full relative">
 
                 <div className="w-12 h-12 rounded-full bg-transparent border border-slate-300 flex items-center justify-center cursor-pointer">
                     <input type="file" id="image" onChange={handleChange} style={{ display: 'none' }} />
@@ -129,7 +129,7 @@ const WritePage = () => {
                 {preview && (
                     <Image src={preview} alt="" width={300} height={300} className="w-[300px] h-[200px] md:h-[300px] md:w-[450px]  object-cover" />
                 )}            
-                <ReactQuill className="w-full text-3xl text-slate-300 placeholder:text-slate-300  " theme="bubble" value={content} onChange={setContent} placeholder="Tell Your story..." />
+                <ReactQuill className="w-full md:w-[80%] lg:w-[60%] text-3xl text-slate-300 placeholder:text-slate-300 " theme="bubble" value={content} onChange={setContent} placeholder="Tell Your story..." />
             </div>
             <button type="submit" className='bg-blue-600 text-white font-medium mt-8 px-6 lg:px-10 py-4 rounded lg:rounded-lg cursor-pointer hover:opacity-70'  >
                 {isLoading ? "Loading..." : "Publish"}

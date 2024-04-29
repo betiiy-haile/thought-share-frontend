@@ -20,7 +20,7 @@ let initialState: AuthState = {
     image: null
 }
     
-const getCookieValue = (name: string) => {
+export const getCookieValue = (name: string) => {
   if (typeof document !== 'undefined') {
     const cookies = document.cookie.split('; ');
     for (let i = 0; i < cookies.length; i++) {
@@ -42,7 +42,6 @@ if (deserializedUser) {
     console.log('User data not found in the cookie.');
 }
 
-
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -51,6 +50,7 @@ export const authSlice = createSlice({
             console.log("action.payload", action.payload)
             
             document.cookie = `user=${JSON.stringify({ id: action.payload._id, name: action.payload.name, email: action.payload.email, token:  action.payload.token })}`
+            
             console.log("cookies setted ")
             state._id = action.payload._id
             state.name = action.payload.name
