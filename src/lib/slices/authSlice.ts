@@ -1,43 +1,61 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import jwt from 'jsonwebtoken';
+import { Post } from "@/types";
+import { slugify } from "@/utils";
 
 export type AuthState = {
     _id: string | null,
     name: string | null,
     email: string | null,
+    username: string | null,
     token: string | null,
-    image: {
+    image?: {
         public_id: string,
         url: string
-    } | null
+    } | null,
+    posts?: Post[]
+
 }
 
 let initialState: AuthState = {
     _id: null,
     name: null,
     email: null,
+    username: null,
     token: null,
-    image: null
+    image: null,
+    posts: []
 }
-    
+
 export const getCookieValue = (name: string) => {
-  if (typeof document !== 'undefined') {
-    const cookies = document.cookie.split('; ');
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].split('=');
-      if (cookie[0] === name) {
-        return decodeURIComponent(cookie[1]);
-      }
+    if (typeof document !== 'undefined') {
+        console.log("cookie", document.cookie)
+        const cookies = document.cookie.split('; ');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].split('=');
+            if (cookie[0] === name) {
+                return decodeURIComponent(cookie[1]);
+            }
+        }
     }
-  }
-  return null;
+    return null;
 };
 
 const cookieData = getCookieValue('user');
-const deserializedUser = cookieData ? JSON.parse(cookieData) : null;
+console.log("cookies Data", cookieData)
+const userData = cookieData ? JSON.parse(cookieData) : null;
 
-if (deserializedUser) {
-    initialState = deserializedUser
+if (userData) {
+    const { id, email, name, image } = jwt.decode(userData.token) as any;    
+    initialState = {
+        _id: id,
+        email,
+        name, 
+        username: slugify(name),
+        image,
+        token: userData.token
+    }
 } else {
     console.log('User data not found in the cookie.');
 }
@@ -48,13 +66,14 @@ export const authSlice = createSlice({
     reducers: {
         setUser: (state, action: PayloadAction<AuthState>) => {
             console.log("action.payload", action.payload)
-            
-            document.cookie = `user=${JSON.stringify({ id: action.payload._id, name: action.payload.name, email: action.payload.email, token:  action.payload.token })}`
-            
+
+            document.cookie = `user=${JSON.stringify({ id: action.payload._id, name: action.payload.name, email: action.payload.email, token: action.payload.token })}`
+
             console.log("cookies setted ")
             state._id = action.payload._id
             state.name = action.payload.name
             state.email = action.payload.email
+            state.username = slugify(action.payload.name as string)
             state.token = action.payload.token
             state.image = action.payload.image
         },
@@ -64,6 +83,7 @@ export const authSlice = createSlice({
             state.email = null;
             state.token = null;
             state.image = null;
+            state.username = null;
             document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         },
     }

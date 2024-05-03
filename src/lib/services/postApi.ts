@@ -2,11 +2,12 @@
     import { baseApi } from "./baseApi";
    import { getCookieValue } from "../slices/authSlice";
 
-    // const authState = useSelector((state: any) => state.auth)
-
     export const postApi = baseApi.injectEndpoints({
         endpoints: (builder) => ( {
     
+            getPosts: builder.query<any, void>({
+                query: () => "/posts",
+            }),
             createPost: builder.mutation<Post, CreatePostRequest>({
                 query: (post) => {
                     const cookieObject = JSON.parse(getCookieValue('user') as string);
@@ -26,46 +27,3 @@
         })
     })
 
-
-// export const postApi = baseApi.injectEndpoints({
-//     endpoints: (builder) => ({
-//         getAllPosts: builder.query<Post[], void>({
-//             query: () => ({
-//                 url: "/posts",
-//                 method: "GET",
-//             }),
-//             providesTags: ["Posts"],
-//         }),
-//         getPost: builder.query<Post, string>({
-//             query: (id) => ({
-//                 url: `/posts/${id}`,
-//                 method: "GET",
-//             }),
-//             providesTags: ["Post"],
-//         }),
-//         createPost: builder.mutation<any, CreatePostRequest>({
-//             query: (post) => ({
-//                 url: "/posts",
-//                 method: "POST",
-//                 body: post,
-//             }),
-//         }),
-//     }),
-// });
-
-
-
-// getAllPosts: builder.query<Post[],  void>({
-//     query: () => ({
-//         url: "/posts",
-//         method: "GET",
-//     }),
-//     providesTags: ["Posts"],
-// }),
-// getPost: builder.query<Post, string>({
-//     query: (id) => ({
-//         url: `/posts/${id}`,
-//         method: "GET",
-//     }),
-//     providesTags: ["Post"],
-// }),

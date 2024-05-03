@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '@/lib/slices/authSlice';
+import { FaUserCircle } from 'react-icons/fa';
 
 
 const Navbar = () => {
@@ -103,9 +104,10 @@ const Navbar = () => {
                                 <li className={`py-4 hover:text-blue-500 transition cursor-pointer ${isActive == "write" ? "text-blue-500" : ""}`} onClick={() => setIsActive("write")}>Write</li>
                             </Link>
                             <div className='flex gap-4 items-center cursor-pointer' onClick={() => setIsSettingOpen(!isSettingOpen)}>
-                                <Image src="/avator.jpg" alt="avator image" className="w-10  h-10 rounded-full" width={60} height={60} />
+                                {authState.image ? <Image src={authState.image.url} alt="avator image" className="w-12  h-12 rounded-full" width={60} height={60} /> : <FaUserCircle className="w-12 h-12 text-gray-500" />}
+                                {/* <Image src={authState.image.url}  alt="avator image" className="w-10  h-10 rounded-full" width={60} height={60} /> */}
                                 <span className='text-white font-medium'>{authState.name}</span>
-
+ 
                             </div>
                             {isSettingOpen && <div ref={menuRef} className='absolute rounded-lg z-20 backdrop-blur-md px-4 w-40 top-20 lg:right-20 xl:right-32 bg-[#3C465E] bg-opacity-30 flex flex-col item-center justify-center'>
                                 <Link href="/profile"><li className='pt-4 hover:text-blue-500 transition cursor-pointer'>Profile</li></Link>
@@ -132,14 +134,14 @@ const Navbar = () => {
                     {isOpen && mobileNav}
                 </div>
 
-                <button className='flex flex-row gap-4 lg:hidden transition '>
-                   {authState.token && <Image src="/avator.jpg" alt="avator image" className="w-10  h-10 rounded-full" width={60} height={60} onClick={() => setIsSettingOpen(!isSettingOpen)} />}
+                <div className='flex items-center flex-row  gap-4 lg:hidden transition '>
+                   {authState.image ? <Image src={authState.image.url} alt="avator image" className="w-10  h-10 rounded-full" width={60} height={60} onClick={() => setIsSettingOpen(!isSettingOpen)} /> : <FaUserCircle className="w-10 h-10 text-gray-500" />}
                     {isSettingOpen && <div ref={menuRef} className='absolute rounded-lg z-20 backdrop-blur-md px-6 w-40 top-16 right-10 bg-[#3C465E] bg-opacity-30 flex flex-col item-center justify-center'>
                         <Link href="/profile"><li className=' list-none pt-4 text-left hover:text-blue-500 transition cursor-pointer'>Profile</li></Link>
                         <button onClick={handleLogout} ><li className='list-none py-4 text-left hover:text-blue-500 transition cursor-pointer'>Logout</li></button>
                     </div>}
                     {isOpen ? <AiOutlineClose size={30} onClick={() => setIsOpen(false)} /> : <FiMenu size={30} onClick={() => setIsOpen(true)} />}
-                </button>
+                </div>
 
             </div>
 

@@ -1,10 +1,23 @@
+'use client'
 import CategoryCard from '@/components/CategoryCard'
 import Image from 'next/image'
-import React from 'react'
-import { categories, posts } from '../../data'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import { categories } from '../../data'
+import { useGetPostsQuery } from '@/lib/features/postApi'
 import PostCard from '@/components/PostCard'
+import Spinner from '@/components/Spinner'
 
 const HomePage = () => {
+
+  const { data: posts, isSuccess, isLoading, isError } = useGetPostsQuery();
+  
+  useEffect(() => {
+    if (posts) {
+      console.log('all posts', posts);
+    }
+  }, [posts]);
+
   return (
     <div className='px-5 lg:px-16 xl:px-28 flex flex-col gap-20 lg:gap-28 '>
 
@@ -34,10 +47,27 @@ const HomePage = () => {
       {/* Recent Posts */}
       <section className='flex flex-col items-center'>
         <h2 className='text-[28px] text-gradient font-bold mb-10 w-full'>Recent Posts</h2>
-        <div className='w-full grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 lg:gap-12 mx-auto'>
-          {/* {
-            posts.map((post, index) => <PostCard key={index} {...post} />)
-          } */}
+        {
+          isLoading ? (
+            <div className='w-full h-44 flex items-center justify-center'>
+              <Spinner />
+            </div>
+          ) : (
+              <div className='w-full grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 lg:gap-12 mx-auto'>
+                {posts &&
+                  [...posts] // create a copy of the posts array
+                    .sort((a: any, b: any) => {
+                      // Sort based on createdAt or updatedAt property (replace 'createdAt' with 'updatedAt' if needed)
+                      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                    })
+                    .slice(0, 3)
+                    .map((post: any, index: number) => <PostCard key={index} {...post} />)}
+              </div>
+              )
+        }
+        
+        <div className='mt-10'>
+          <Link href="/blogs" className='button-gradient px-6 lg:px-8 py-3 lg:py-5 rounded lg:rounded-lg cursor-pointer hover:opacity-70'>Load More</Link>
         </div>
       </section>
 

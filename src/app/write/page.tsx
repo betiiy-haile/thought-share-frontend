@@ -70,21 +70,6 @@ const WritePage = () => {
             category
         })
 
-        // const res = await fetch("https://thought-share-api-1.onrender.com/api/posts", {
-        //     method: "POST",
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         title,
-        //         content,
-        //         image: preview,
-        //         slug: slugify(title),
-        //         Comment: [],
-        //         category                
-        //     }),
-        // })
-
         console.log("res", data)
     }
 

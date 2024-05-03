@@ -1,3 +1,3 @@
 import { postApi } from "../services/postApi";
 
-export const { useCreatePostMutation } = postApi
+export const { useCreatePostMutation, useGetPostsQuery } = postApi
